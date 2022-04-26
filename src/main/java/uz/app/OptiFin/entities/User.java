@@ -1,5 +1,6 @@
 package uz.app.OptiFin.entities;
 
+import uz.app.Anno.orm.annotations.*;
 import uz.app.Anno.orm.*;
 
 @Schema("public")
@@ -19,17 +20,26 @@ public class User extends BaseEntity {
     @Column("password_hashed")
     String passwordHashed;
 
+    String password;
+
     public User() {}
 
     @Override
     public boolean isValid() {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public void validate() throws AnnoValidationException {
-        // TODO Auto-generated method stub
-        
+        if(login == null || "".equals(login)) {
+            throw new AnnoValidationException("Empty login", "login");
+        }
+        if(fullName == null || "".equals(fullName)) {
+            throw new AnnoValidationException("Empty fullName", "fullName");
+        }
+        if(password == null || "".equals(password)) {
+            throw new AnnoValidationException("Empty password", "password");
+        }
+        passwordHashed = "hashed-" + password;
     }
 }
