@@ -30,7 +30,7 @@ public class App {
         }
 
         gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("dd.MM.yyyy HH:mm:ss");
+        gsonBuilder = gsonBuilder.setDateFormat("dd.MM.yyyy");
         globalDateTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         globalDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     }

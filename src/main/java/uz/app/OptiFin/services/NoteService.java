@@ -24,16 +24,16 @@ import uz.app.Anno.service.annotations.Service;
 import uz.app.Anno.util.HttpMethod;
 import uz.app.OptiFin.App;
 import uz.app.OptiFin.JsonResponseObject;
-import uz.app.OptiFin.entities.Notes;
+import uz.app.OptiFin.entities.Note;
 
 @Service("/notes")
-public class NotesService extends BaseService {
-    Repository<Notes> notesRepo;
+public class NoteService extends BaseService {
+    Repository<Note> notesRepo;
     Gson gson;
 
-    public NotesService() {
+    public NoteService() {
         try {
-            notesRepo = (Repository<Notes>)App.getRepoFactory().getRepository(Notes.class);
+            notesRepo = (Repository<Note>)App.getRepoFactory().getRepository(Note.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,7 +45,7 @@ public class NotesService extends BaseService {
         throws IOException, SQLException
     {
         PrintWriter out = res.getWriter();
-        Notes[] notes;
+        Note[] notes;
         try {
             notes = notesRepo.getAll();
         } catch (SQLException ex) {
@@ -75,7 +75,7 @@ public class NotesService extends BaseService {
             out.print("{}");
             return;
         }
-        Notes notes;
+        Note notes;
         int notesId = Integer.parseInt(notesIdParameter.toString());
         try {
             notes = notesRepo.getById(notesId);
@@ -98,7 +98,7 @@ public class NotesService extends BaseService {
 
 
     @Route(value="/save", method = HttpMethod.POST)
-    void saveNotes(HttpServletRequest req, HttpServletResponse res) 
+    void saveNote(HttpServletRequest req, HttpServletResponse res) 
         throws IOException
     {
         PrintWriter out = res.getWriter();
@@ -107,8 +107,8 @@ public class NotesService extends BaseService {
 
         String requestJson = getReqBody(req);
         
-        Notes notes = gson.fromJson(requestJson, Notes.class);
-                    /*new Notes(-1, 
+        Note notes = gson.fromJson(requestJson, Note.class);
+                    /*new Note(-1, 
                             requestMap.get("login").toString(), 
                             requestMap.get("fullName").toString(), 
                             requestMap.get("email").toString(), 
@@ -133,7 +133,7 @@ public class NotesService extends BaseService {
     }
 
     @Route(value="/update", method = HttpMethod.PUT)
-    void updateNotes(HttpServletRequest req, HttpServletResponse res) 
+    void updateNote(HttpServletRequest req, HttpServletResponse res) 
         throws IOException
     {
         PrintWriter out = res.getWriter();
@@ -142,9 +142,9 @@ public class NotesService extends BaseService {
 
         String requestJson = getReqBody(req);
         
-        Notes note = gson.fromJson(requestJson, Notes.class);
+        Note note = gson.fromJson(requestJson, Note.class);
         try {
-            Notes oldNote = notesRepo.getById(note.getId());
+            Note oldNote = notesRepo.getById(note.getId());
             note.setCreatedOn(oldNote.getCreatedOn());
             notesRepo.update(note);
             HashMap<String, Object> resMap = new HashMap<String, Object>();
@@ -164,7 +164,7 @@ public class NotesService extends BaseService {
     }
 
     @Route(value="/delete", method = HttpMethod.DELETE)
-    void deleteNotes(HttpServletRequest req, HttpServletResponse res) 
+    void deleteNote(HttpServletRequest req, HttpServletResponse res) 
         throws IOException
     {
         PrintWriter out = res.getWriter();
@@ -223,9 +223,9 @@ public class NotesService extends BaseService {
                 filter = (AbstractMap<String, Object>)requestMap.get("filter");
         }
         
-        Notes[] notes;
+        Note[] notes;
         try{
-            Repository<Notes>.WhereCondition whereCondition = notesRepo.where("category").equal(noteCategory);
+            Repository<Note>.WhereCondition whereCondition = notesRepo.where("category").equal(noteCategory);
             if(filter != null) {
                 if(filter.containsKey("sum")) {
                     ArrayList<Float> fromTo;

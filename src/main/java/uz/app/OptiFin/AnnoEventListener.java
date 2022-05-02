@@ -23,7 +23,7 @@ public class AnnoEventListener extends uz.app.Anno.AnnoEventListener {
             e.printStackTrace();
         }
         App.Init();
-        AnnoContext.setPoolConnection(new AnnoPoolConnection(HerokuDB.getConnectionUrl(), HerokuDB.getLogin(), HerokuDB.getPassword()));
+        AnnoContext.setPoolConnection(new AnnoPoolConnection(HerokuDB.getConnectionUrl(), HerokuDB.getLogin(), HerokuDB.getPassword(), 1));
     }
     
 }

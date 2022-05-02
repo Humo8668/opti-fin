@@ -12,7 +12,7 @@ import uz.app.Anno.orm.annotations.Table;
 
 @Table("Notes")
 @Schema("public")
-public class Notes extends BaseEntity {
+public class Note extends BaseEntity {
 
     @Id
     @Generated
@@ -20,6 +20,8 @@ public class Notes extends BaseEntity {
     Integer id;
     @Column("sum")
     Float sum;
+    @Column("currency_code")
+    String currency_code;
     @Column("category")
     String category;
     @Column("user_id")
