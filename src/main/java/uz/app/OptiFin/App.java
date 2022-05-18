@@ -3,12 +3,15 @@ package uz.app.OptiFin;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import com.google.gson.GsonBuilder;
 
 import javassist.Loader.Simple;
 import uz.app.Anno.orm.RepositoryFactory;
+import uz.app.OptiFin.entities.Currency;
+import uz.app.OptiFin.gsonHelpers.*;
 
 public class App {
     private static RepositoryFactory repoFactory;
@@ -30,9 +33,13 @@ public class App {
         }
 
         gsonBuilder = new GsonBuilder();
-        gsonBuilder = gsonBuilder.setDateFormat("dd.MM.yyyy");
+        //gsonBuilder = gsonBuilder.setDateFormat("dd.MM.yyyy");
         globalDateTimeFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         globalDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        gsonBuilder.registerTypeAdapter(Currency.class, new CurrencyGsonDeserializer());
+        gsonBuilder.registerTypeAdapter(Currency.class, new CurrencyGsonSerializer());
+        gsonBuilder.registerTypeAdapter(Date.class, new DateGsonDeserializer());
+        gsonBuilder.registerTypeAdapter(Date.class, new DateGsonSerializer());
     }
 
     public static RepositoryFactory getRepoFactory(){

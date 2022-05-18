@@ -2,13 +2,13 @@ package uz.app.OptiFin.entities;
 
 
 import uz.app.Anno.orm.AnnoValidationException;
-import uz.app.Anno.orm.BaseEntity;
+import uz.app.Anno.orm.IEntity;
 import uz.app.Anno.orm.annotations.*;
 
 
 @Schema("public")
 @Table("Categories")
-public class Category extends BaseEntity {
+public class Category implements IEntity {
 
     @Id
     @Generated
